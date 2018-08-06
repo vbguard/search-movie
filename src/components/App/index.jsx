@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader';
 // import PropTypes from 'prop-types';
 // import Loader from 'react-loader-spinner';
 import styles from './styles.css';
-import Search from '../Search/Search';
+import Search from '../Search';
 
 class App extends Component {
   state = {

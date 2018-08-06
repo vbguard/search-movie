@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchSelect from './Search-select/Seach-select';
+import SearchSelect from './Search-select';
 
 const Search = ({ searchTitleValue }) => (
   <div>
