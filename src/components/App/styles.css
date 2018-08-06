@@ -1,3 +1,4 @@
-.App {
-  text-align: center;
+.Section {
+  min-width: 100vw;
+  min-height: 100vh;
 }

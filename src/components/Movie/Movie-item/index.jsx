@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import imageUrl from '../../../services/tmdb-image';
 
-const MovieList = ({ movies }) => (
-  <ul>
-    {movies.map(movie => (
-      <li key={movie.id}>
-        <h3>{movie.title}</h3>
-      </li>
-    ))}
-  </ul>
+const MovieItem = ({ movie }) => (
+  <div>
+    <img src={imageUrl(movie.poster_path)} alt="" />
+  </div>
 );
 
-MovieList.propTypes = {
-  movies: PropTypes.arrayOf(
+MovieItem.propTypes = {
+  movie: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
@@ -23,4 +20,4 @@ MovieList.propTypes = {
   ).isRequired,
 };
 
-export default MovieList;
+export default MovieItem;

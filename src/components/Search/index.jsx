@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchSelect from './Search-select';
+import SearchByTitle from './Search-title';
 
-const Search = ({ searchTitleValue }) => (
+const Search = ({ categorySelected }) => (
   <div>
-    <SearchSelect searchValue={searchTitleValue} />
+    <SearchSelect categorySelected={categorySelected} />
+    <SearchByTitle />
   </div>
 );
 
 Search.propTypes = {
-  searchTitleValue: PropTypes.string.isRequired,
+  // titleValue: PropTypes.string.isRequired,
+  categorySelected: PropTypes.string.isRequired,
+};
+
+Search.defaultProp = {
+  titleValue: '',
 };
 
 export default Search;
