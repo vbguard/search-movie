@@ -9,7 +9,7 @@ import MovieList from '../Movie';
 
 class App extends Component {
   state = {
-    categorySelected: '',
+    // category: '',
     titleValue: '',
     movies: [],
     // watchlist: [],
@@ -24,16 +24,21 @@ class App extends Component {
     console.log('prevState: ', prevState);
   }
 
-  fetchMovie = ({ category, onSuccess, onError, page }) => {
+  setCategorySelected(value) {
+    console.log(value);
+    this.setState({ titleValue: value });
+  }
+
+  fetchMovieByCategory = ({ category, onSuccess, onError, page }) => {
     moviedb.category({ category, onSuccess, onError, page });
   };
 
   render() {
-    const { titleValue, categorySelected, movies } = this.state;
+    const { titleValue, movies } = this.state;
 
     return (
       <section className={styles.Section}>
-        <Search searchValue={(titleValue, categorySelected)} />
+        <Search searchValue={(titleValue, this.setCategorySelected())} />
         <MovieList movies={movies} />
       </section>
     );
