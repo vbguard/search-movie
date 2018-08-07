@@ -10,14 +10,9 @@ const options = [
 ];
 
 class SearchSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedOption: null,
-    };
-  }
-
-  // const setCategorySelected = this.props;
+  state = {
+    selectedOption: null,
+  };
 
   changeOption = option => {
     this.setState({ selectedOption: option });
@@ -25,18 +20,20 @@ class SearchSelect extends React.Component {
 
   moveDataToState() {
     const { selectedOption } = this.state;
+    const { getCategory } = this.props;
     // eslint-disable-next-line
     console.log(`Option selected:`, selectedOption.value);
     // eslint-disable-next-line
     console.log('props in Select: ', this.props);
+    console.log(typeof getCategory);
     // this.props.categorySelected = String(selectedOption.value);
     // this.setProps({ categorySelected: selectedOption.value });
-    this.setCategorySelected(selectedOption.value);
+    getCategory(selectedOption.value);
   }
 
   render() {
     const { selectedOption } = this.state;
-    console.log(this.props);
+    console.log('in search select: ', this.props);
     return (
       <div>
         {selectedOption && this.moveDataToState()}
@@ -51,7 +48,7 @@ class SearchSelect extends React.Component {
 }
 
 SearchSelect.propTypes = {
-  setCategorySelected: PropTypes.func.isRequired,
+  getCategory: PropTypes.func.isRequired,
   // categorySelected: PropTypes.string.isRequired,
 };
 
