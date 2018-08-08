@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MovieItem from './Movie-item';
+import styles from './styles.css';
 
 const MovieList = ({ movies }) => (
-  <ul>
+  <ul className={styles.ul}>
     {movies.map(movie => (
       <li key={movie.id}>
-        <h3>{movie.title}</h3>
+        <MovieItem movie={movie} />
       </li>
     ))}
   </ul>

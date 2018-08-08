@@ -1,4 +1,18 @@
 .Section {
-  min-width: 100vw;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 5fr;
+  min-width: 100%;
   min-height: 100vh;
+}
+
+.SearchBar {
+  padding-top: 25px;
+}
+
+.Movies {
+  grid-row: 2 span;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

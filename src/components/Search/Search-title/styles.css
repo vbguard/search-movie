@@ -1,0 +1,9 @@
+.SearchForm {
+  width: 100%;
+}
+
+.SearchInput {
+  width: 100%;
+  font-size: 20px;
+  padding: 5px 15px;
+}

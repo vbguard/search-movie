@@ -5,6 +5,7 @@ import SearchSelect from './Search-select';
 import SearchByTitle from './Search-title';
 
 const Search = ({ getCategory, titleValue }) => {
+  // eslint-disable-next-line
   console.log('in search: ', typeof setCategorySelected);
   return (
     <div>

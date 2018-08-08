@@ -1,0 +1,92 @@
+.Card {
+  display: inline-block;
+  padding: 8px;
+  background-color: #fff;
+  min-height: auto;
+  position: relative;
+  transition: all linear 2s;
+  box-shadow: 0 0 5px #424242;
+}
+
+.Card:hover>.CardInfo {
+  display: flex;
+  transition: all linear 2s;
+}
+
+.CardInfo {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all linear 2s;
+}
+
+.CardVote {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 55px;
+  height: 40px;
+  font-size: 20px;
+  background-color: #FF5722;
+  border-radius: 0 0 15px 0;
+  text-align: center;
+  line-height: 40px;
+  color: #F5F5F5;
+  transition: all linear 5s;
+}
+
+.CardTitle {
+  max-width: 90%;
+  text-align: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  transition: all linear 2s;
+}
+
+.CardOverviewBox {}
+
+.CardOverview {
+  /* padding-right: 10px; */
+  hyphens: auto;
+}
+
+.CardOption {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.AddToWatchlist {
+  text-align: center;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #FF5722;
+}
+
+.MoreInfo {
+  text-align: center;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
