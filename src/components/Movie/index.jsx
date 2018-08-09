@@ -3,26 +3,23 @@ import PropTypes from 'prop-types';
 import MovieItem from './Movie-item';
 import styles from './styles.css';
 
-const MovieList = ({ movies }) => (
+const MovieList = ({ movies, onMoreInfo, onAdd }) => (
   <ul className={styles.ul}>
     {movies.map(movie => (
-      <li key={movie.id}>
-        <MovieItem movie={movie} />
-      </li>
+      <MovieItem
+        key={movie.id}
+        movie={movie}
+        onMoreInfo={() => onMoreInfo(movie.id)}
+        onAdd={() => onAdd(movie)}
+      />
     ))}
   </ul>
 );
 
 MovieList.propTypes = {
-  movies: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      overview: PropTypes.string.isRequired,
-      release_date: PropTypes.string.isRequired,
-      poster_path: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onMoreInfo: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
 
 export default MovieList;

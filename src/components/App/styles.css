@@ -1,17 +1,33 @@
 .Section {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 150px auto;
+  grid-gap: 0px 0px;
+  grid-template-areas: 'watchlist search-bar' 'watchlist2 movie-list';
   min-width: 100%;
   min-height: 100vh;
 }
 
+.WatchListBox {
+  padding: 15px;
+  grid-row: 2 span;
+}
+
 .SearchBar {
-  padding-top: 25px;
+  padding: 15px;
+  grid-area: search-bar;
+}
+
+.SearchBarBox {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-around;
 }
 
 .Movies {
-  grid-row: 2 span;
+  grid-area: movie-list;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import Loader from 'react-loader-spinner';
-import InfiniteScroller from 'react-infinite-scroller';
+// import InfiniteScroller from 'react-infinite-scroller';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 import * as moviedb from '../../services/api';
 import styles from './styles.css';
 // import Search from '../Search';
 import SearchSelect from '../Search/Search-select';
 import SearchTitle from '../Search/Search-title';
 import MovieList from '../Movie';
+import Backdrop from '../Backdrop';
+import WatchList from '../Watch';
 
 class App extends Component {
   constructor() {
@@ -15,7 +18,7 @@ class App extends Component {
 
     this.state = {
       // eslint-disable-next-line
-      category: '',
+      // category: '',
       titleValue: '',
       movies: [],
       selectedOption: null,
@@ -25,12 +28,35 @@ class App extends Component {
         { value: 'upcoming', label: 'Upcoming' },
       ],
       error: null,
-      // watchlist: [],
+      watchlist: [],
       // isActiveWatchlist: false,
       isLoading: false,
-      hasMoreMovies: false,
+      showModalMoreInfo: false,
+      // hasMoreMovies: true,
     };
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // const { selectedOption } = this.state;
+  //   // const nextSelectedOption = nextState.selectedOption.value;
+  //   // // eslint-disable-next-line
+  //   // if (!this.state.selectedOption) {
+  //   //   console.log('Its Work');
+  //   //   return true;
+  //   // }
+
+  //   // const shouldUpdate = selectedOption.value === nextSelectedOption.value;
+  //   // return shouldUpdate;
+  //   // eslint-disable-next-line
+  //   if (!this.state.selectedOption) return true;
+  //   // eslint-disable-next-line
+  //   const prevCategory = this.state.selectedOption.value;
+  //   const nextCategory = nextState.selectedOption.value;
+
+  //   const shouldUpdate = prevCategory !== nextCategory;
+
+  //   return shouldUpdate;
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     const { selectedOption } = this.state;
@@ -41,7 +67,6 @@ class App extends Component {
 
     if (!prevState.selectedOption) {
       this.activeLoader();
-
       const categorySelect = selectedOption.value;
       moviedb.category({
         categorySelected: categorySelect,
@@ -57,7 +82,6 @@ class App extends Component {
 
     if (prevSelectOption.value !== selectedOption.value) {
       this.activeLoader();
-      this.activeHasLoadMovie();
       const categorySelect = selectedOption.value;
       moviedb.category({
         categorySelected: categorySelect,
@@ -70,11 +94,33 @@ class App extends Component {
 
   handleFetchSuccess = movies => this.setState({ movies, isLoading: false });
 
-  handleFetchError = error => this.setState({ error });
+  handleFetchError = error => this.setState({ error, isLoading: false });
+
+  handleMoreInfo = id => {
+    // evt.preventDefault();
+    // console.log('MoreInfo Pushed: ', evt);
+    console.log(id);
+    moviedb.movieDetail({
+      id,
+      onSuccess: this.handleFetchMoreInfoSuccess,
+      onError: this.handleFetchMoreInfoError,
+    });
+  };
+
+  handleFetchMoreInfoError = error =>
+    this.setState({ error, showModalMoreInfo: false });
+
+  handleFetchMoreInfoSuccess = movies =>
+    this.setState({ movies, showModalMoreInfo: false });
+
+  handleOnAdd = movie => {
+    console.log(movie);
+    // console.log('Add movie: ', movie);
+  };
 
   activeLoader = () => this.setState({ isLoading: true });
 
-  activeHasLoadMovie = () => this.setState({ hasMoreMovies: true });
+  // activeHasLoadMovie = () => this.setState({ hasMoreMovies: true });
 
   changeOption = option => {
     this.setState({ selectedOption: option });
@@ -83,30 +129,27 @@ class App extends Component {
   titleOnChange = e => {
     e.preventDefault();
     this.setState({ titleValue: e.target.value });
-    // if (e.target.value.length > 0) {
-    //   this.setState({ selectedOption: null });
-    // }
+  };
 
+  titleOnSubmit = evt => {
+    evt.preventDefault();
+    const { titleValue } = this.state;
+    this.activeLoader();
     moviedb.title({
-      value: e.target.value,
+      value: titleValue,
       onSuccess: this.handleFetchSuccess,
       onError: this.handleFetchError,
       page: 1,
     });
   };
 
-  loadMovies = page => {
-    const { titleValue, selectedOption } = this.state;
-    // this.setState({ hasMoreMovies: false });
-    if (!titleValue) {
-      console.log('');
-    }
-    console.log(page);
-    moviedb.getMore({
-      value: titleValue,
+  fetchData = prop => {
+    console.log('Infitine Call Fetch', prop);
+    moviedb.title({
+      value: 'Zub',
       onSuccess: this.handleFetchSuccess,
       onError: this.handleFetchError,
-      pages: page,
+      page: 1,
     });
   };
 
@@ -118,37 +161,46 @@ class App extends Component {
       error,
       isLoading,
       titleValue,
-      hasMoreMovies,
+      watchlist,
+      showModalMoreInfo,
     } = this.state;
 
+    console.log(`App Rende - ${Date.now()}`);
     return (
       <section className={styles.Section}>
+        <div className={styles.WatchListBox}>
+          <WatchList watchlist={watchlist} />
+        </div>
         <div className={styles.SearchBar}>
-          <SearchSelect
-            options={options}
-            selectedOption={selectedOption}
-            onChange={this.changeOption}
-          />
-          <SearchTitle titleValue={titleValue} onChange={this.titleOnChange} />
+          <div className={styles.SearchBarBox}>
+            <SearchSelect
+              options={options}
+              selectedOption={selectedOption}
+              onChange={this.changeOption}
+            />
+            <SearchTitle
+              titleValue={titleValue}
+              onChange={this.titleOnChange}
+              onSubmit={this.titleOnSubmit}
+            />
+          </div>
         </div>
 
         <div className={styles.Movies}>
           {isLoading && (
-            <Loader type="Puff" color="#00BFFF" height="100" width="100" />
+            <Backdrop>
+              <Loader type="Grid" color="#" height="100" width="100" />
+            </Backdrop>
           )}
           {error && <h2 className={styles.error}>{error.message}</h2>}
           {movies.length > 0 && (
-            <InfiniteScroller
-              pageStart={1}
-              loadMore={this.loadMovies}
-              hasMore={hasMoreMovies}
-              loader={
-                <Loader type="Puff" color="#00BFFF" height="100" width="100" />
-              }
-            >
-              <MovieList movies={movies} />
-            </InfiniteScroller>
+            <MovieList
+              movies={movies}
+              onAdd={this.handleOnAdd}
+              onMoreInfo={this.handleMoreInfo}
+            />
           )}
+          {/* <MovieList movies={movies} /> */}
         </div>
       </section>
     );
