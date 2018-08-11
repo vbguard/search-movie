@@ -1,0 +1,62 @@
+.wrapper {
+  position: fixed;
+  top: 20%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  width: 700px;
+  max-height: 600px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.box {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+  grid-column-gap: 15px;
+}
+
+.image {
+  border-radius: 10px 0 0 10px;
+  grid-area: 5 span;
+  /* width: 400px; */
+}
+
+.title {}
+
+.genresWrap {
+  display: flex;
+}
+
+.genresListTitle {
+  margin: 0;
+  line-height: 2;
+  margin-right: 10px;
+}
+
+.genresList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.genresItem {
+  line-height: 2;
+  margin-right: 5px;
+}
+
+.genresItem:last-child {
+  margin-right: 0;
+}
+
+.genresOverview {
+  font-size: 14px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

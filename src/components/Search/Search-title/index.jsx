@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.css';
 
 const SearchByTitle = ({ titleValue, onChange, onSubmit }) => (
-  <form action="" className={styles.SearchForm} onSubmit={onSubmit}>
+  <form action="#" className={styles.SearchForm} onSubmit={onSubmit}>
     <label htmlFor="search-by-title" className={styles.SearchTitleLabel}>
       Search By Title
       <input
@@ -11,7 +11,7 @@ const SearchByTitle = ({ titleValue, onChange, onSubmit }) => (
         type="text"
         name="searchByTitle"
         id="search-by-title"
-        value={titleValue}
+        value={titleValue.master}
         onChange={onChange}
         placeholder="Search By Title..."
       />
@@ -27,14 +27,20 @@ const SearchByTitle = ({ titleValue, onChange, onSubmit }) => (
     </button>
   </form>
 );
-
 SearchByTitle.propTypes = {
-  titleValue: PropTypes.string.isRequired,
+  titleValue: PropTypes
+    .shape
+    // (master: PropTypes.string.isRequired),
+    // (primary: PropTypes.string.isRequired),
+    (),
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-SearchByTitle.defaultProp = {
-  titleValue: '',
+SearchByTitle.defaultProps = {
+  titleValue: {
+    master: '',
+    primary: '',
+  },
 };
 export default SearchByTitle;

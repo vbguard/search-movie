@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from './styles.css';
 
-const SearchSelect = ({ selectedOption, onChange, options }) => (
+const SearchSelect = ({ value, onChange, options }) => (
   <div className={styles.SearchSelect}>
     <h3 className={styles.SearchSelectTitle}>Search by Category</h3>
-    <Select value={selectedOption} onChange={onChange} options={options} />
+    <Select value={value} onChange={onChange} options={options} />
   </div>
 );
 
 SearchSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
-  selectedOption: PropTypes.shape({
+  value: PropTypes.shape({
     value: PropTypes.string,
     label: PropTypes.string,
   }),
@@ -20,7 +20,7 @@ SearchSelect.propTypes = {
 };
 
 SearchSelect.defaultProps = {
-  selectedOption: null,
+  value: null,
 };
 
 export default SearchSelect;

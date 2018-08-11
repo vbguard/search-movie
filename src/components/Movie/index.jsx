@@ -10,7 +10,7 @@ const MovieList = ({ movies, onMoreInfo, onAdd }) => (
         key={movie.id}
         movie={movie}
         onMoreInfo={() => onMoreInfo(movie.id)}
-        onAdd={() => onAdd(movie)}
+        onAdd={() => onAdd(movie.id)}
       />
     ))}
   </ul>

@@ -1,6 +1,6 @@
 .Section {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 380px 4fr;
   grid-template-rows: 150px auto;
   grid-gap: 0px 0px;
   grid-template-areas: 'watchlist search-bar' 'watchlist2 movie-list';
@@ -29,6 +29,7 @@
 .Movies {
   grid-area: movie-list;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
