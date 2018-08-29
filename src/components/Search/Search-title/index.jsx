@@ -27,12 +27,9 @@ const SearchByTitle = ({ titleValue, onChange, onSubmit }) => (
     </button>
   </form>
 );
+
 SearchByTitle.propTypes = {
-  titleValue: PropTypes
-    .shape
-    // (master: PropTypes.string.isRequired),
-    // (primary: PropTypes.string.isRequired),
-    (),
+  titleValue: PropTypes.shape(),
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
@@ -43,4 +40,5 @@ SearchByTitle.defaultProps = {
     primary: '',
   },
 };
+
 export default SearchByTitle;

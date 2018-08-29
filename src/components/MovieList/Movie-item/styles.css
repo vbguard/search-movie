@@ -1,5 +1,7 @@
 .Card {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 8px;
   background-color: #fff;
   min-height: auto;

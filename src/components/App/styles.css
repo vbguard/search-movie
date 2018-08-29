@@ -3,9 +3,10 @@
   grid-template-columns: 380px 4fr;
   grid-template-rows: 150px auto;
   grid-gap: 0px 0px;
-  grid-template-areas: 'watchlist search-bar' 'watchlist2 movie-list';
+  grid-template-areas: 'watchlist search-bar''watchlist2 movie-list';
   min-width: 100%;
   min-height: 100vh;
+  padding-bottom: 50px;
 }
 
 .WatchListBox {
@@ -32,4 +33,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.loadMoreBtn {
+  margin: 0;
+  margin-top: 15px;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  background: #ff5722;
+  border-radius: 6px;
+  border: 1px dotted #fff;
+  padding: 10px 20px 10px 20px;
+  color: #fff;
 }

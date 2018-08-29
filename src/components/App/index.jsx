@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import Loader from 'react-loader-spinner';
-// import InfiniteScroller from 'react-infinite-scroller';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import * as moviedb from '../../services/api';
 import styles from './styles.css';
-// import Search from '../Search';
 import SearchSelect from '../Search/Search-select';
 import SearchTitle from '../Search/Search-title';
-import MovieList from '../Movie';
+import MovieList from '../MovieList';
 import Backdrop from '../Backdrop';
 import WatchList from '../Watch';
 import ModalMoreInfo from '../Modal/MoreInfoMovie';
@@ -39,35 +36,20 @@ class App extends Component {
     };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   // const { selectedOption } = this.state;
-  //   // const nextSelectedOption = nextState.selectedOption.value;
-  //   // // eslint-disable-next-line
-  //   // if (!this.state.selectedOption) {
-  //   //   console.log('Its Work');
-  //   //   return true;
-  //   // }
+  componentDidMount = () => {
+    const watchlistLocal = JSON.parse(localStorage.getItem('watchlist'));
 
-  //   // const shouldUpdate = selectedOption.value === nextSelectedOption.value;
-  //   // return shouldUpdate;
-  //   // eslint-disable-next-line
-  //   if (!this.state.selectedOption) return true;
-  //   // eslint-disable-next-line
-  //   const prevCategory = this.state.selectedOption.value;
-  //   const nextCategory = nextState.selectedOption.value;
-
-  //   const shouldUpdate = prevCategory !== nextCategory;
-
-  //   return shouldUpdate;
-  // }
+    if (watchlistLocal !== null) {
+      this.initWatchlist(watchlistLocal);
+    }
+  };
 
   componentDidUpdate(prevProps, prevState) {
-    const { selectedOption } = this.state;
-    // eslint-disable-next-line
+    const { selectedOption, watchlist } = this.state;
 
-    // if (titleValue.master.length !== 0) this.searchValueToPrimary();
-
-    // if (prevState.selectedOption && selectedOption) return;
+    if (prevState.watchlist.length !== watchlist.length) {
+      this.setLocalStorage();
+    }
 
     if (!selectedOption) return;
 
@@ -83,15 +65,9 @@ class App extends Component {
     }
   }
 
-  // searchValueToPrimary = () => {
-  //   const { titleValue } = this.state;
-  //   this.setState({
-  //     titleValue: {
-  //       ...titleValue,
-  //       primary: titleValue.master,
-  //     },
-  //   });
-  // };
+  initWatchlist = watchlist => {
+    this.setState({ watchlist });
+  };
 
   makeCategoryRequest = () => {
     const { page, selectedOption } = this.state;
@@ -105,16 +81,11 @@ class App extends Component {
     });
   };
 
-  // makeCategoryRequestLM = ({ query, page }) => {
-  //   this.setState({ isLoading: true }, () => {
-  //     moviedb.category({
-  //       categorySelected: query,
-  //       onSuccess: this.handleFetchSuccess,
-  //       onError: this.handleFetchError,
-  //       page,
-  //     });
-  //   });
-  // };
+  setLocalStorage = () => {
+    const { watchlist } = this.state;
+
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+  };
 
   handleFetchSuccess = data => {
     const { page, movies, titleValue } = this.state;
@@ -145,10 +116,7 @@ class App extends Component {
   handleFetchMoreInfoError = error => this.setState({ error });
 
   handleFetchMoreInfoSuccess = moreInfo => {
-    // eslint-disable-next-line
-    console.log(moreInfo);
     this.setState({ movie: moreInfo });
-    // console.log('in handle: ', this.state.moreInfo);
   };
 
   handleFetchAddToWatchlistSuccess = movie => {
@@ -163,11 +131,14 @@ class App extends Component {
     const { watchlist } = this.state;
     const haveId = watchlist.find(item => item.id === id);
     if (!haveId) {
-      moviedb.movieDetail({
-        id,
-        onSuccess: this.handleFetchAddToWatchlistSuccess,
-        onError: this.handleFetchAddToWatchlistError,
-      });
+      moviedb.movieDetail(
+        {
+          id,
+          onSuccess: this.handleFetchAddToWatchlistSuccess,
+          onError: this.handleFetchAddToWatchlistError,
+        },
+        this.setLocalStorage(),
+      );
     }
   };
 
@@ -304,7 +275,11 @@ class App extends Component {
             />
           )}
           {page < totalPage && (
-            <button type="button" onClick={() => this.handleLoadMore()}>
+            <button
+              type="button"
+              className={styles.loadMoreBtn}
+              onClick={() => this.handleLoadMore()}
+            >
               Load More
             </button>
           )}
